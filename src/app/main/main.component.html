@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <h1>Gauss-Jordan</h1>
+        <p>Programa que resuelve sistema de ecuaciones usando el método de Gauss-Jordan</p>
+        <p>El programa supondrá que el número de incógnitas es el mismo que el número de ecuaciones</p>
+        <p>Ingresa la cantidad de incógnitas con las que cuenta tu sistema:</p>
+        <form (ngSubmit)="ingresarCoheficientes()">
+          <input type="number" name="col" [(ngModel)]="col" />
+          <button type="submit">capturar</button>
+        </form>
+      </div>
+    </div>
+  
+    <div *ngIf="cartel">
+      <div class="row">
+        <h2>Sistema de ecuaciones</h2>
+        <form>
+          <div class="container" *ngFor="let fila of matriz; let i = index">
+            <div class="row form-row">
+              <span class="col d-flex align-items-center" *ngFor="let columna of fila; let j = index" style="margin-right: 10px">
+                <!-- Condición para la última columna -->
+                <ng-container *ngIf="j < col; else equalsSign">
+                  <input type="text" [(ngModel)]="matriz[i][j]" [ngModelOptions]="{ standalone: true }" class="form-control form-control-sm" style="width: 60px" name="input-{{ i }}-{{ j }}" placeholder="a{{ i + 1 }}{{ j + 1 }}" />
+                  <span style="margin-left: 5px">X<sub>{{ j + 1 }}</sub></span>
+                </ng-container>
+                <ng-template #equalsSign>
+                  <span style="margin-right: 5px">=</span>
+                  <input type="text" [(ngModel)]="matriz[i][j]" [ngModelOptions]="{ standalone: true }" class="form-control form-control-sm" style="width: 60px" name="input-{{ i }}-{{ j }}" placeholder="b{{ i + 1 }}" />
+                </ng-template>
+              </span>
+            </div>
+          </div>
+          <button type="button" (click)="validarYMostrarMatriz()">Resolver pos Gauss-Jordan</button>
+        </form>
+      </div>
+      <hr />
+      <div *ngIf="!matrizInvalida">
+      <div class="row">
+        <h2>Representación matricial</h2>
+        <table class="table table-bordered">
+          <tr *ngFor="let fila of matriz">
+            <td *ngFor="let columna of fila">{{ columna }}</td>
+          </tr>
+        </table>
+      </div>
+      <hr>
+      <h2>Soluciones</h2>
+      <div class="row" *ngFor="let columna of matrizSolucion; let i = index">
+        <span style="margin-left: 5px">X<sub>{{ i + 1 }}</sub> = {{columna}}</span>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="container">
+ 
+  </div>
+  
